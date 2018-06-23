@@ -4,6 +4,7 @@ import shutil
 from bs4 import BeautifulSoup
 
 FILE_TYPES = ('gif', 'jpg', 'jpeg', 'mp4', 'png', 'gifv', 'webm')
+ILLEGAL_HREF = ('player', 'html')
 
 
 def check_path(url_):
@@ -38,7 +39,7 @@ if __name__ == '__main__':
             href = str(link.get('href'))
             for i in FILE_TYPES:
                 if i in href:
-                    if 'player' not in href:
+                    if not any(x in href for x in ILLEGAL_HREF):
                         file_i = Image(href)
                         file_i.download()
                     else:
